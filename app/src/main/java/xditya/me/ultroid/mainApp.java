@@ -3,7 +3,6 @@ package xditya.me.ultroid;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-
-import xditya.me.ultroid.R;
 
 public class mainApp extends AppCompatActivity {
     EditText edtAPIID, edtAPIHASH, edtSESSION, edtREDISURI, edtREDISPASSWORD, edtHEROKUAPI;
@@ -63,19 +60,15 @@ public class mainApp extends AppCompatActivity {
                 }
 
                 btnProceed.setText("Deploying...");
-
-                String hkDep = null;
-                System.out.println("into fn");
+                String hkDep = null, error = null;
                 try {
                     hkDep = herokuDeploys.herokuDeployer(tvTemp, apiid, apihash, session,redisuri, redispass, herokuapi);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    error = e.toString();
                 }
-
-                System.out.println("back from fn");
-                tvTemp.setText(hkDep);
-                btnProceed.setVisibility(View.GONE);
-
+                if (hkDep == null) {
+                    tvTemp.setText("ERROR\n"+error);
+                }
                 System.out.println(hkDep);
             }
         });
