@@ -1,12 +1,9 @@
 package xditya.me.ultroid;
 
-import android.os.AsyncTask;
-import android.os.StrictMode;
+import android.os.AsyncTask;s
 import android.widget.TextView;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
@@ -18,7 +15,7 @@ public class herokuDeploys {
             String results = "";
             URL url = new URL(base_url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+         null   conn.setRequestMethod("GET");
             int responsecode = conn.getResponseCode();
             if (responsecode != 200) {
                 return "API is down or unreachable at the moment!";
@@ -40,7 +37,6 @@ public class herokuDeploys {
         // #TODO
 
         final String[] response = new String[1];
-        final String[] error = {null};
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -49,17 +45,13 @@ public class herokuDeploys {
                     response[0] = Requests.getRequest("https://apis.xditya.me/morse/encode?text=hello");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    error[0] = e.toString();
-                    response[0] = null;
+                    response[0] = "ERROR:\n" + e.toString();
                 }
+                tvTemp.setText(response[0]);
+
+                // this f*king thing works atlast
             }
         });
 
-        if (response[0] == null) {
-            return "ERROR:\n" + error[0];
-        }
-        else {
-            return response[0];
-        }
     }
 }
