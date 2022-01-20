@@ -69,6 +69,7 @@ public class mainApp extends AppCompatActivity {
                 if (hkDep == null) {
                     tvTemp.setText("ERROR\n"+error);
                 }
+                tvTemp.setText(hkDep);
                 System.out.println(hkDep);
             }
         });

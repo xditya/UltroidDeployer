@@ -1,5 +1,6 @@
 package xditya.me.ultroid;
 
+import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.widget.TextView;
 
@@ -40,28 +41,19 @@ public class herokuDeploys {
 
         final String[] response = new String[1];
         final String[] error = {null};
-//        new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                try {
-//                    response[0] = Requests.getRequest("https://apis.xditya.me/morse/encode?text=hello");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    error[0] = e.toString();
-//                    response[0] = null;
-//                }
-//            }
-//        });
 
-
-        try {
-            response[0] = Requests.getRequest("https://apis.xditya.me/morse/encode?text=hello");
-        } catch (Exception e) {
-            e.printStackTrace();
-            error[0] = e.toString();
-            response[0] = null;
-        }
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    response[0] = Requests.getRequest("https://apis.xditya.me/morse/encode?text=hello");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    error[0] = e.toString();
+                    response[0] = null;
+                }
+            }
+        });
 
         if (response[0] == null) {
             return "ERROR:\n" + error[0];
