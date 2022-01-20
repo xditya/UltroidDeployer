@@ -62,17 +62,21 @@ public class mainApp extends AppCompatActivity {
                     return;
                 }
 
+                btnProceed.setText("Deploying...");
+
                 String hkDep = null;
+                System.out.println("into fn");
                 try {
                     hkDep = herokuDeploys.herokuDeployer(tvTemp, apiid, apihash, session,redisuri, redispass, herokuapi);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                btnProceed.setText("Wait");
+                System.out.println("back from fn");
                 tvTemp.setText(hkDep);
                 btnProceed.setVisibility(View.GONE);
 
+                System.out.println(hkDep);
             }
         });
 
