@@ -31,7 +31,7 @@ public class herokuDeploys {
         static String getRequest(String base_url, String herokuapi, int apiid, String apihash, String session, String redisuri, String redispass) throws IOException {
             String results = "";
 
-            String json = "{" +
+            byte[] json = ("{" +
                     "\"source_blob\": {\"url\": \"" + base_url + "\"}" +
                     "\"overrides\": {\"env\": {" +
                     "\"API_ID\": \"" + apiid + "\"" +
@@ -39,11 +39,12 @@ public class herokuDeploys {
                     "\"SESSION\": \"" + session + "\"" +
                     "\"REDIS_URI\": \"" + redisuri + "\"" +
                     "\"REDIS_PASSWORD\": \"" + redispass + "\"" +
-                    "} } }";
+                    "} } }").getBytes(StandardCharsets.UTF_8);
 
             URL url = new URL(base_url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+            conn.setRequestMethod("POST");
+            conn.setFixedLengthStreamingMode(json.length);
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("Accept", "application/vnd.heroku+json; version=3");
             conn.setRequestProperty("Authorization", "Bearer " + herokuapi);
