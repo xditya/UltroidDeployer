@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class herokuDeploys {
@@ -76,14 +77,15 @@ public class herokuDeploys {
             public void run() {
                 try {
                     response[0] = Requests.getRequest(herokuDeployableRepo, herokuapi, apiid, apihash, session, redisuri, redispass);
+                    System.out.println(response[0]);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    response[0] = "ERROR:\n" + e.toString();
+                    response[0] = "ERROR";
                 }
-                tvTemp.setText(response[0]);
+                System.out.println("response[0] in fn: " + response[0]);
             }
         });
-
-        return "okda";
+        System.out.println("response[0] out of fn: " + response[0]);
+        return response[0];
     }
 }
